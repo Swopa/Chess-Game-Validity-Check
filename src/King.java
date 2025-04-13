@@ -5,7 +5,7 @@ public class King extends Piece{
 
     @Override
     boolean isValidMove(int srcRow, int srcCol, int destRow, int destCol, Piece[][] board) {
-        //TODO check logic
+        //TODO check logic | Castling
 
 
         //King moves one space in any direction
