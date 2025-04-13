@@ -8,38 +8,27 @@ public class Pawn extends Piece{
     boolean isValidMove(int srcRow, int srcCol, int destRow, int destCol, Piece[][] board) {
         //TODO pieces on the path detection | not capturing team pieces | clean up messy else if cases
 
-        if(this.isWhite){
-            if(board[destRow][destCol] == null && (srcCol == destCol)){
-                if(srcRow == 1){
-                    if((destRow - srcRow) <= 2){
-                        return true;
-                    }
-                }else{
-                    if((destRow - srcRow) == 1){
-                        return true;
-                    }
-                }
-            }else if(board[destRow][destCol] != null && Math.abs((destCol - srcCol)) == 1 && (destRow - srcRow) == 1){
+        int direction = this.isWhite ? 1 : -1;
+        int startRow = this.isWhite ? 1 : 6;
+
+        int rowDiff = destRow - srcRow;
+        int colDiff = destCol - srcCol;
+
+        Piece destinationPiece = board[destRow][destCol];
+
+
+        if(srcCol == destCol && destinationPiece == null){
+            if(rowDiff == direction){
                 return true;
             }
-        }else{
-            if(board[destRow][destCol] == null && (srcCol == destCol)){
-                if(srcRow == 6){
-                    if((srcRow - destRow) <= 2){
-                        return true;
-                    }
-                }else{
-                    if((srcRow - destRow) == 1){
-                        return true;
-                    }
-                }
-            }else if(board[destRow][destCol] != null && Math.abs((destCol - srcCol)) == 1 && (destRow - srcRow) == 1){
+            if(srcRow == startRow && rowDiff == 2*direction
+                    && board[srcRow + direction][srcCol] == null){
                 return true;
             }
         }
 
 
-
-        return false;
+        //Capture a piece
+        return destinationPiece != null && Math.abs(colDiff) == 1 && (rowDiff) == direction && destinationPiece.isWhite != this.isWhite;
     }
 }
