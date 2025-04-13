@@ -10,6 +10,7 @@ public class Board {
         board[row][col] = piece;
     }
 
+
     public void setUpInitialPosition(){
         //White pieces
         setPiece(0, 0, new Rook(true));
