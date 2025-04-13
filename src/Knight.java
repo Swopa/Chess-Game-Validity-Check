@@ -5,13 +5,17 @@ public class Knight extends Piece{
 
     @Override
     boolean isValidMove(int srcRow, int srcCol, int destRow, int destCol, Piece[][] board) {
-        //TODO not capturing team pieces
+        int rowDiff = Math.abs(destRow-srcRow);
+        int colDiff = Math.abs(destCol-srcCol);
 
 
-        if((Math.abs(destRow-srcRow) == 2 && Math.abs(destCol-srcCol) == 1) || (Math.abs(destRow-srcRow) == 1 && Math.abs(destCol-srcCol) == 2)){
-            return true;
+        //Knight moves in L-shapes. So either 2 spaces by row and 1 space by column or vice versa
+        if((rowDiff != 2 &&  colDiff != 1) || (rowDiff != 1 && colDiff != 2)){
+            return false;
         }
 
-        return false;
+
+        Piece destPiece = board[destRow][destCol];
+        return destPiece == null || destPiece.isWhite != this.isWhite;
     }
 }

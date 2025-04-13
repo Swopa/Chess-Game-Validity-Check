@@ -5,14 +5,18 @@ public class King extends Piece{
 
     @Override
     boolean isValidMove(int srcRow, int srcCol, int destRow, int destCol, Piece[][] board) {
-        //TODO pieces on the path detection | not capturing team pieces | check
+        //TODO check logic
 
+
+        //King moves one space in any direction
         int rowDiff = Math.abs(srcRow-destRow);
         int colDiff = Math.abs(srcCol-destCol);
 
 
         if((rowDiff <= 1 && colDiff <= 1) && (rowDiff + colDiff) != 0){
-            return true;
+            Piece destPiece = board[destRow][destCol];
+
+            return destPiece == null || destPiece.isWhite != this.isWhite;
         }
 
         return false;
