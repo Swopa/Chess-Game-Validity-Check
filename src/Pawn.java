@@ -6,7 +6,6 @@ public class Pawn extends Piece{
 
     @Override
     boolean isValidMove(int srcRow, int srcCol, int destRow, int destCol, Piece[][] board) {
-        //TODO pieces on the path detection | not capturing team pieces | clean up messy else if cases
 
         int direction = this.isWhite ? 1 : -1;
         int startRow = this.isWhite ? 1 : 6;
