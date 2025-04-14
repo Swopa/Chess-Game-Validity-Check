@@ -10,7 +10,7 @@ public class Knight extends Piece{
 
 
         //Knight moves in L-shapes. So either 2 spaces by row and 1 space by column or vice versa
-        if((rowDiff != 2 &&  colDiff != 1) || (rowDiff != 1 && colDiff != 2)){
+        if(!((rowDiff != 2 &&  colDiff != 1) || (rowDiff != 1 && colDiff != 2))){
             return false;
         }
 

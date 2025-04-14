@@ -15,7 +15,7 @@ public class MoveInterpreter {
             return;
         }
 
-        
+
 
         char pieceChar = 'P';
         int startIndex = 0;
@@ -25,12 +25,12 @@ public class MoveInterpreter {
             startIndex = 1;
         }
 
-        move = move.replaceAll("[+#]", "");
+        move = move.replaceAll("[+#x]", "");
 
         String dest = move.substring(move.length() - 2);
         int destCol = dest.charAt(0) - 'a';
         int destRow = Character.getNumericValue(dest.charAt(1)) - 1;
-        
+
         String disambiguation = move.substring(startIndex, move.length() - 2);
 
         int[] source = findSourceSquare(pieceChar, destRow, destCol, disambiguation);
@@ -51,6 +51,13 @@ public class MoveInterpreter {
     }
 
     int[] findSourceSquare(char pieceChar, int destRow, int destCol, String disambiguation){
+
+        System.out.printf("Looking for move to (%d, %d) = %c%d with disambiguation [%s]\n",
+                destRow, destCol, (char)(destCol + 'a'), destRow + 1, disambiguation);
+
+        System.out.printf("Checking %s moves for %s to %c%d%n",
+                whiteToMove ? "white" : "black", pieceChar, (char)(destCol + 'a'), destRow + 1);
+
         for(int row = 0; row < 8; row++){
             for(int col = 0; col < 8; col++){
                 Piece piece = board.board[row][col];
