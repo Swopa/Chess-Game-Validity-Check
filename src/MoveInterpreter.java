@@ -8,9 +8,43 @@ public class MoveInterpreter {
 
     public void interpretMove(String move){
 
-        //TODO Add castling | Add Check
+        //TODO Add castling | Add Check | Add Promotion
         if(move.equals("O-O")|| move.equals("O-O-O")){
-            System.out.println("Castling not yet implemented");
+            boolean isShortCastling = move.equals("O-O");
+
+            int row = whiteToMove ? 0 : 7;
+            int srcCol = 4;
+            int kingDestCol = isShortCastling ? 6 : 2;
+            int rookSrcCol = isShortCastling ? 7 : 0;
+            int rookDestCol = isShortCastling ? 5 : 3;
+
+            Piece king = board.board[row][srcCol];
+            Piece rook = board.board[row][rookSrcCol];
+
+            if(king instanceof King && rook instanceof Rook && king.isWhite == whiteToMove && rook.isWhite == whiteToMove){
+                if(king.isValidMove(row, srcCol, row, kingDestCol, board.board)){
+                    board.board[row][kingDestCol] = king;
+                    board.board[row][srcCol] = null;
+                    king.markMove();
+
+                    board.board[row][rookDestCol] = rook;
+                    board.board[row][rookSrcCol] = null;
+                    rook.markMove();
+
+                    System.out.println("Moving " + king + " to: " + row + "," + kingDestCol);
+
+                    whiteToMove = !whiteToMove;
+                    return;
+                }else {
+                    System.out.println("Illegal castling move: " + move);
+                }
+            }else{
+                System.out.println("Cannot castle: King or Rook in incorrect position");
+                return;
+            }
+
+
+
             whiteToMove = !whiteToMove;
             return;
         }
@@ -36,7 +70,7 @@ public class MoveInterpreter {
         int[] source = findSourceSquare(pieceChar, destRow, destCol, disambiguation);
 
         if(source == null){
-            System.out.println("Illegal move or ambigous: " + move);
+            System.out.println("===================================================================Illegal move or ambigous: " + move);
             return;
         }
 
@@ -47,6 +81,13 @@ public class MoveInterpreter {
         );
 
         board.movePiece(source[0], source[1], destRow, destCol);
+
+        Piece piece = board.board[source[0]] [source[1]];
+
+        if(piece instanceof King || piece instanceof Rook){
+            piece.markMove();
+        }
+
         whiteToMove = !whiteToMove;
     }
 

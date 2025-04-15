@@ -7,15 +7,17 @@ public class Knight extends Piece{
     boolean isValidMove(int srcRow, int srcCol, int destRow, int destCol, Piece[][] board) {
         int rowDiff = Math.abs(destRow-srcRow);
         int colDiff = Math.abs(destCol-srcCol);
+        Piece destPiece = board[destRow][destCol];
 
 
         //Knight moves in L-shapes. So either 2 spaces by row and 1 space by column or vice versa
-        if(!((rowDiff != 2 &&  colDiff != 1) || (rowDiff != 1 && colDiff != 2))){
-            return false;
+        if ((rowDiff == 2 && colDiff == 1) || (rowDiff == 1 && colDiff == 2)) {
+            // valid knight move
+            return destPiece == null || destPiece.isWhite != this.isWhite;
         }
 
 
-        Piece destPiece = board[destRow][destCol];
-        return destPiece == null || destPiece.isWhite != this.isWhite;
+
+        return false;
     }
 }

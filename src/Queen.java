@@ -14,13 +14,13 @@ public class Queen extends Piece{
 
 
         if(rowDiff == colDiff){
-            int rowStep = rowDiff > 0 ? 1: -1;
-            int colStep = colDiff > 0 ? 1: -1;
+            int rowStep = rowDiff > srcRow ? 1: -1;
+            int colStep = colDiff > srcCol ? 1: -1;
 
             int row = srcRow + rowStep;
             int col = srcCol + colStep;
 
-            while(row != destRow && col != destCol){
+            while(row != destRow){
                 if(board[row][col] != null){
                     return false;
                 }

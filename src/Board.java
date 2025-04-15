@@ -41,7 +41,7 @@ public class Board {
 
     void movePiece(int srcRow, int srcCol, int destRow, int destCol){
         Piece p = board[srcRow][srcCol];
-        if(p != null && p.isValidMove(srcRow, srcCol, destRow, destCol, board)){
+        if(p != null){
             board[destRow][destCol] = p;
             board[srcRow][srcCol] = null;
         }else {
