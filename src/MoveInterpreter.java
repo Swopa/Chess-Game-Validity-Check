@@ -8,7 +8,7 @@ public class MoveInterpreter {
 
     public void interpretMove(String move){
 
-        //TODO Add castling | Add Check | Add Promotion
+        //TODO Add Check
         if(move.equals("O-O")|| move.equals("O-O-O")){
             boolean isShortCastling = move.equals("O-O");
 

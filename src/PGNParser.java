@@ -15,13 +15,15 @@ public class PGNParser {
         }
 
 
+        String cleaned = movesOnly.toString().replaceAll("\\d+\\.(\\.\\.\\.)?", "").replaceAll("\\s+", " ").trim();
+
 
         // This part of code parses string of moves by removing empty spaces and putting each component in string array
         // and then removes numbers like 1. 2. and so on. leaves only list of move notations
         List<String> moves = new ArrayList<>();
-        String[] init = movesOnly.toString().trim().split("\\s+");
-        for(String part : init){
-            if(!part.matches(".*\\d+\\.") && !(part.contains("-") && !part.contains("O"))){
+
+        for(String part : cleaned.split(" ")){
+            if(!(part.contains("-") && !part.contains("O"))){
                 moves.add(part);
             }
         }

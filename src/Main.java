@@ -2,29 +2,25 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        String pgn = "[Event \"Tbilisi FIDE GP 2015\"]\n" +
-                "[Site \"Tbilisi GEO\"]\n" +
-                "[Date \"2015.02.20\"]\n" +
-                "[Round \"5.6\"]\n" +
-                "[White \"Jobava,Ba\"]\n" +
-                "[Black \"Mamedyarov,S\"]\n" +
-                "[Result \"1-0\"]\n" +
-                "[WhiteTitle \"GM\"]\n" +
-                "[BlackTitle \"GM\"]\n" +
-                "[WhiteElo \"2696\"]\n" +
-                "[BlackElo \"2759\"]\n" +
-                "[ECO \"A01\"]\n" +
-                "[Opening \"Nimzovich-Larsen attack\"]\n" +
-                "[Variation \"Indian variation\"]\n" +
-                "[WhiteFideId \"13601520\"]\n" +
-                "[BlackFideId \"13401319\"]\n" +
-                "[EventDate \"2015.02.15\"]\n" +
-                " \n" +
-                "1. b3 Nf6 2. Bb2 g6 3. Nc3 Bg7 4. d4 c5 5. e3 cxd4 6. exd4 d5 7. Qd2 Nc6 8.\n" +
-                "O-O-O Qa5 9. f3 h5 10. Kb1 Bf5 11. Bd3 Nxd4 12. Nge2 Nxe2 13. Qxe2 Bd7 14. Rhe1\n" +
-                "e6 15. Bxg6 fxg6 16. Nxd5 Nxd5 17. Bxg7 Rg8 18. Qe5 Rxg7 19. Rxd5 Qb4 20. Rd6\n" +
-                "Kf8 21. Red1 Bc6 22. R1d4 Qb5 23. Rd8+ Rxd8 24. Rxd8+ Ke7 25. Qd6+ Kf6 26. Qd4+\n" +
-                "Kf7 27. Qf4+ Ke7 1-0";
+        String pgn = "[Event \"Wch U10\"]\n" +
+                "[Site \"Duisburg\"]\n" +
+                "[Date \"1992.??.??\"]\n" +
+                "[Round \"5\"]\n" +
+                "[White \"Bacrot, Etienne\"]\n" +
+                "[Black \"Vallejo Pons, Francisco\"]\n" +
+                "[Result \"1/2-1/2\"]\n" +
+                "[WhiteElo \"\"]\n" +
+                "[BlackElo \"\"]\n" +
+                "[ECO \"A89\"]\n" +
+                "\n" +
+                "1.d4 f5 2.Nf3 Nf6 3.g3 g6 4.Bg2 Bg7 5.c4 O-O 6.O-O d6 7.Nc3 Nc6 8.d5 Ne5\n" +
+                "9.Nxe5 dxe5 10.e4 f4 11.b3 g5 12.Qe2 a6 13.Bd2 Qe8 14.Rac1 Qg6 15.c5 Qh6\n" +
+                "16.f3 fxg3 17.hxg3 Nh5 18.Qf2 Qg6 19.Be3 g4 20.f4 exf4 21.gxf4 g3 22.Qd2 Nf6\n" +
+                "23.e5 Ng4 24.Rf3 Nh2 25.d6 Nxf3+ 26.Bxf3 cxd6 27.Nd5 Rf7 28.cxd6 Bg4 29.Bxg4 Qxg4\n" +
+                "30.Nxe7+ Kh8 31.d7 Rff8 32.Rc8 Raxc8 33.dxc8=Q Rxc8 34.Nxc8 Qxc8 35.Kg2 h5\n" +
+                "36.Kxg3 Qg4+ 37.Kh2 Qh4+ 38.Kg1 Qg3+ 39.Kf1 Qf3+ 40.Qf2 Qh1+ 41.Ke2 Qb1 42.Kf3 Qf5\n" +
+                "43.Ke2 Kh7 44.Qf3 b5 45.Bd2 h4 46.Be1 h3 47.Kf2 Bh6 48.Qb7+ Kg6 49.Qc6+ Kh5\n" +
+                "50.Qf3+ Kg6 51.Qc6+ Kh7 52.Qb7+ Bg7 53.Qf3 h2 54.Kg2  1/2-1/2\n";
 
         List<String> moves = PGNParser.parseMoves(pgn);
 
