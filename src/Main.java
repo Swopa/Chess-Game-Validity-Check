@@ -1,5 +1,6 @@
+import java.io.IOException;
 import java.util.List;
-
+/*
 public class Main {
     public static void main(String[] args) {
         String pgn = "[Event \"Wch U10\"]\n" +
@@ -62,6 +63,60 @@ public class Main {
                     } else {
                         symbol = piece.getClass().getSimpleName().charAt(0);
                     }
+                    System.out.print(symbol + (piece.isWhite ? "W" : "B") + " ");
+                }
+            }
+            System.out.println();
+        }
+    }
+}
+*/
+
+
+public class Main {
+    public static void main(String[] args) {
+        try {
+            List<String> games = PGNFileReader.readGames("src\\Tbilisi2015.pgn");
+
+            int gameCount = 1;
+            for (String game : games) {
+                System.out.println("=== Game " + gameCount + " Start ===");
+                List<String> moves = PGNParser.parseMoves(game);
+
+                Board board = new Board();
+                MoveInterpreter interpreter = new MoveInterpreter(board);
+
+                System.out.println("Initial Position:");
+                printBoard(board);
+
+                for (String move : moves) {
+                    System.out.println("\nMove: " + move);
+                    try {
+                        interpreter.interpretMove(move);
+                    } catch (IllegalMoveException e) {
+                        System.out.println("Illegal move detected: " + e.getMessage());
+                        break;
+                    }
+                    printBoard(board);
+                }
+
+                System.out.println("=== Game " + gameCount + " End ===\n");
+                gameCount++;
+            }
+
+        } catch (IOException e) {
+            System.err.println("Error reading PGN file: " + e.getMessage());
+        }
+    }
+
+    public static void printBoard(Board board) {
+        for (int row = 0; row < 8; row++) {
+            for (int col = 0; col < 8; col++) {
+                Piece piece = board.board[row][col];
+                if (piece == null) {
+                    System.out.print(" . ");
+                } else {
+                    char symbol = piece instanceof Knight ? 'N' : piece.getClass().getSimpleName().charAt(0);
                     System.out.print(symbol + (piece.isWhite ? "W" : "B") + " ");
                 }
             }

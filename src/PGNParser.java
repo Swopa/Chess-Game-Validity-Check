@@ -23,6 +23,11 @@ public class PGNParser {
         List<String> moves = new ArrayList<>();
 
         for(String part : cleaned.split(" ")){
+
+            if (part.isEmpty() || part.matches("1-0|0-1|1/2-1/2|\\*")) {
+                continue;
+            }
+
             if(!(part.contains("-") && !part.contains("O"))){
                 moves.add(part);
             }
