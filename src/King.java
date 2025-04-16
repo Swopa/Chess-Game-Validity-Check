@@ -14,18 +14,29 @@ public class King extends Piece{
         int colDiff = Math.abs(srcCol-destCol);
         int startRow = isWhite ? 0 : 7;
 
+
         if(underCheck(destRow, destCol, board)){
             return false;
         }
 
 
-        if (destRow == startRow && colDiff == 1) {
+
+        // Short castle only happens from e1 to g1 (white) or e8 to g8 (black)
+        if (this.isWhite && srcRow == 0 && srcCol == 4 && destRow == 0 && destCol == 6) {
+            return canShortCastle(board);
+        }
+        if (!this.isWhite && srcRow == 7 && srcCol == 4 && destRow == 7 && destCol == 6) {
             return canShortCastle(board);
         }
 
-        if(destRow == startRow && colDiff == 2){
+// Long castle only happens from e1 to c1 (white) or e8 to c8 (black)
+        if (this.isWhite && srcRow == 0 && srcCol == 4 && destRow == 0 && destCol == 2) {
             return canLongCastle(board);
         }
+        if (!this.isWhite && srcRow == 7 && srcCol == 4 && destRow == 7 && destCol == 2) {
+            return canLongCastle(board);
+        }
+
 
 
         if((rowDiff <= 1 && colDiff <= 1) && (rowDiff + colDiff) != 0){
@@ -33,6 +44,7 @@ public class King extends Piece{
 
             return destPiece == null || destPiece.isWhite != this.isWhite;
         }
+
 
         return false;
     }

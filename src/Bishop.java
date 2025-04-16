@@ -14,8 +14,8 @@ public class Bishop extends Piece{
         }
         //While moving in diagonal row and column change the same way
 
-        int rowStep = rowDiff > srcRow ? 1: -1;
-        int colStep = colDiff > srcCol ? 1: -1;
+        int rowStep = destRow > srcRow ? 1: -1;
+        int colStep = destCol > srcCol ? 1: -1;
 
         int row = srcRow + rowStep;
         int col = srcCol + colStep;

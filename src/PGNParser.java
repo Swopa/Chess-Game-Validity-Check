@@ -21,7 +21,7 @@ public class PGNParser {
         List<String> moves = new ArrayList<>();
         String[] init = movesOnly.toString().trim().split("\\s+");
         for(String part : init){
-            if(!part.matches(".*\\d+\\.")){
+            if(!part.matches(".*\\d+\\.") && !(part.contains("-") && !part.contains("O"))){
                 moves.add(part);
             }
         }

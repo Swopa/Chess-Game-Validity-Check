@@ -2,8 +2,6 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-
-
         String pgn = "[Event \"Tbilisi FIDE GP 2015\"]\n" +
                 "[Site \"Tbilisi GEO\"]\n" +
                 "[Date \"2015.02.20\"]\n" +
@@ -30,17 +28,40 @@ public class Main {
 
         List<String> moves = PGNParser.parseMoves(pgn);
 
-        System.out.println(moves);
+        System.out.println("Game Start:");
+        printBoard(new Board());
 
         Board board = new Board();
         MoveInterpreter interpreter = new MoveInterpreter(board);
 
-        for(String move: moves){
-            System.out.println("move: " + move);
+        for (String move : moves) {
+            System.out.println("\nMove: " + move);
             interpreter.interpretMove(move);
+
+            // Print the board after each move
+            printBoard(board);
         }
 
+        System.out.println("Game Over!");
+    }
 
+    public static void printBoard(Board board) {
+        for (int row = 0; row < 8; row++) {
+            for (int col = 0; col < 8; col++) {
+                Piece piece = board.board[row][col];
+                if (piece == null) {
+                    System.out.print(" . ");
+                } else {
+                    char symbol;
+                    if (piece instanceof Knight) {
+                        symbol = 'N';
+                    } else {
+                        symbol = piece.getClass().getSimpleName().charAt(0);
+                    }
+                    System.out.print(symbol + (piece.isWhite ? "W" : "B") + " ");
+                }
+            }
+            System.out.println();
+        }
     }
 }
-
