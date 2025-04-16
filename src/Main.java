@@ -36,7 +36,15 @@ public class Main {
 
         for (String move : moves) {
             System.out.println("\nMove: " + move);
-            interpreter.interpretMove(move);
+
+
+            try {
+                interpreter.interpretMove(move);
+            } catch (IllegalMoveException e){
+                System.out.println("Game Over: " + e.getMessage());
+                break;
+            }
+
 
             // Print the board after each move
             printBoard(board);

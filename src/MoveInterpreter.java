@@ -49,6 +49,13 @@ public class MoveInterpreter {
             return;
         }
 
+        char promotionChar = 0;
+        if(move.contains("=")){
+            int index = move.indexOf("=");
+            promotionChar = move.charAt(index + 1);
+            move = move.substring(0, index);
+        }
+
 
 
         char pieceChar = 'P';
@@ -59,6 +66,8 @@ public class MoveInterpreter {
             startIndex = 1;
         }
 
+
+        boolean isCapture = move.contains("x");
         move = move.replaceAll("[+#x]", "");
 
         String dest = move.substring(move.length() - 2);
@@ -69,10 +78,13 @@ public class MoveInterpreter {
 
         int[] source = findSourceSquare(pieceChar, destRow, destCol, disambiguation);
 
-        if(source == null){
-            System.out.println("===================================================================Illegal move or ambigous: " + move);
-            return;
+        Piece destPiece = board.board[destRow][destCol];
+
+
+        if(source == null || (isCapture && destPiece == null)){
+            throw new IllegalMoveException("Illegal move or ambiguous: " + move);
         }
+
 
         System.out.printf("Moving %s from %c%d to %c%d%n",
                 pieceChar,
@@ -82,7 +94,27 @@ public class MoveInterpreter {
 
         board.movePiece(source[0], source[1], destRow, destCol);
 
+        if(promotionChar != 0){
+            Piece promoted = switch (promotionChar) {
+                case 'Q' -> new Queen(whiteToMove);
+                case 'R' -> new Rook(whiteToMove);
+                case 'N' -> new Knight(whiteToMove);
+                case 'B' -> new Bishop(whiteToMove);
+                default -> null;
+            };
+
+            if (promoted != null){
+                board.board[destRow][destCol] = promoted;
+                System.out.println("Promoted to: " + promoted.getClass().getSimpleName());
+            }else {
+                System.out.println("Invalid promotion piece: " + promotionChar);
+            }
+        }
+
+
+
         Piece piece = board.board[source[0]] [source[1]];
+
 
         if(piece instanceof King || piece instanceof Rook){
             piece.markMove();
