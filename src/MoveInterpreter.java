@@ -8,7 +8,8 @@ public class MoveInterpreter {
 
     public void interpretMove(String move){
 
-        //TODO Add Check
+        //Handle castling. Should be in separate function. Will do it if I have time
+        //Checks if move token matches one for castling and then checks if castling can be done
         if(move.equals("O-O")|| move.equals("O-O-O")){
             boolean isShortCastling = move.equals("O-O");
 
@@ -49,6 +50,8 @@ public class MoveInterpreter {
             return;
         }
 
+
+        //Case for promotion. If token contains = then program should promote pawn to said figure if requirements are met
         char promotionChar = 0;
         if(move.contains("=")){
             int index = move.indexOf("=");
@@ -57,7 +60,8 @@ public class MoveInterpreter {
         }
 
 
-
+        //Formats move in a way where we can do array operations
+        //Also we determine what kind of piece has to be moved
         char pieceChar = 'P';
         int startIndex = 0;
 
@@ -74,13 +78,19 @@ public class MoveInterpreter {
         int destCol = dest.charAt(0) - 'a';
         int destRow = Character.getNumericValue(dest.charAt(1)) - 1;
 
+        //we store disambiguation for move if there is any
         String disambiguation = move.substring(startIndex, move.length() - 2);
 
+
+        //we store source positions
         int[] source = findSourceSquare(pieceChar, destRow, destCol, disambiguation);
 
+
+
+        //store square where piece has to end up
         Piece destPiece = board.board[destRow][destCol];
 
-
+        //check that we are not capturing empty space
         if(source == null || (isCapture && destPiece == null)){
             throw new IllegalMoveException("Illegal move or ambiguous: " + move);
         }
@@ -92,8 +102,20 @@ public class MoveInterpreter {
                 (char)(destCol + 'a'), destRow + 1
         );
 
+
+        //Simulate move so that the move does not leave our king under check
+        Board simulated = board.copy();
+        simulated.movePiece(source[0], source[1], destRow, destCol);
+
+        if (simulated.isKingInCheck(whiteToMove)) {
+            throw new IllegalMoveException("Illegal move: king would be in check");
+        }
+
+
+        //Move piece
         board.movePiece(source[0], source[1], destRow, destCol);
 
+        //Handle promotion if present
         if(promotionChar != 0){
             Piece promoted = switch (promotionChar) {
                 case 'Q' -> new Queen(whiteToMove);
@@ -112,7 +134,7 @@ public class MoveInterpreter {
         }
 
 
-
+        //Save if piece has moved to track eligibility for castling
         Piece piece = board.board[source[0]] [source[1]];
 
 
@@ -123,6 +145,9 @@ public class MoveInterpreter {
         whiteToMove = !whiteToMove;
     }
 
+
+    //Function to find the source of the move. Iterates through all pieces according to disambiguation if necessary
+    //and finds from where the move should be made
     int[] findSourceSquare(char pieceChar, int destRow, int destCol, String disambiguation){
 
         System.out.printf("Looking for move to (%d, %d) = %c%d with disambiguation [%s]\n",
@@ -160,6 +185,9 @@ public class MoveInterpreter {
         return null;
     }
 
+
+
+    //Check if the piece is of desired type
     private boolean matchPieceType(Piece piece, char pieceChar){
         return switch (pieceChar) {
             case 'N' -> piece instanceof Knight;

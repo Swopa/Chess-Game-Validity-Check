@@ -3,6 +3,12 @@ public class Bishop extends Piece{
         super(isWhite);
     }
 
+    public Bishop clone() {
+        Bishop copy = new Bishop(this.isWhite);
+        copy.hasMoved = this.hasMoved;
+        return copy;
+    }
+
     @Override
     boolean isValidMove(int srcRow, int srcCol, int destRow, int destCol, Piece[][] board) {
         int rowDiff = Math.abs(srcRow - destRow);

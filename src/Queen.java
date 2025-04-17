@@ -5,6 +5,12 @@ public class Queen extends Piece{
         super(isWhite);
     }
 
+    public Queen clone() {
+        Queen copy = new Queen(this.isWhite);
+        copy.hasMoved = this.hasMoved;
+        return copy;
+    }
+
     @Override
     boolean isValidMove(int srcRow, int srcCol, int destRow, int destCol, Piece[][] board)  {
 

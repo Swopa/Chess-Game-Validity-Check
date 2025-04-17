@@ -3,6 +3,12 @@ public class Knight extends Piece{
         super(isWhite);
     }
 
+    public Knight clone() {
+        Knight copy = new Knight(this.isWhite);
+        copy.hasMoved = this.hasMoved;
+        return copy;
+    }
+
     @Override
     boolean isValidMove(int srcRow, int srcCol, int destRow, int destCol, Piece[][] board) {
         int rowDiff = Math.abs(destRow-srcRow);

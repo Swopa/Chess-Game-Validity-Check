@@ -50,4 +50,62 @@ public class Board {
     }
 
 
+    public boolean isKingInCheck(boolean isWhite){
+        int kingRow = -1, kingCol = -1;
+
+        for(int row = 0; row < 8; row++){
+            for(int col = 0; col < 8; col++){
+                Piece piece = board[row][col];
+                if(piece instanceof King && piece.isWhite == isWhite){
+                    kingRow = row;
+                    kingCol = col;
+                    break;
+                }
+            }
+        }
+
+        if(kingRow == -1){
+            throw new IllegalStateException("King not found on the board.");
+        }
+
+        for(int row = 0; row < 8; row++){
+            for(int col = 0; col <8; col++){
+                Piece attacker = board[row][col];
+                if(attacker != null && attacker.isWhite != isWhite){
+                    if(attacker.isValidMove(row, col, kingRow, kingCol, this.board)){
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+
+
+    public Board copy() {
+        Board newBoard = new Board();
+        newBoard.clearBoard(); // prevents overwriting via setup
+
+        for (int row = 0; row < 8; row++) {
+            for (int col = 0; col < 8; col++) {
+                Piece piece = board[row][col];
+                if (piece != null) {
+                    newBoard.setPiece(row, col, piece.clone());
+                }
+            }
+        }
+        return newBoard;
+    }
+
+
+    public void clearBoard() {
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                board[i][j] = null;
+            }
+        }
+    }
+
+
 }

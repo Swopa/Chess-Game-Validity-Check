@@ -14,5 +14,7 @@ abstract class Piece {
         this.isWhite = isWhite;
     }
 
+    public abstract Piece clone();
+
     abstract boolean isValidMove(int srcRow, int srcCol, int destRow, int destCol, Piece[][] board);
 }

@@ -5,7 +5,11 @@ public class Rook extends Piece{
         super(isWhite);
     }
 
-
+    public Rook clone() {
+        Rook copy = new Rook(this.isWhite);
+        copy.hasMoved = this.hasMoved;
+        return copy;
+    }
 
 
     @Override

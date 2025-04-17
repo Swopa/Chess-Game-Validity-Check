@@ -6,6 +6,12 @@ public class King extends Piece{
     }
 
 
+    public King clone() {
+        King copy = new King(this.isWhite);
+        copy.hasMoved = this.hasMoved;
+        return copy;
+    }
+
     @Override
     boolean isValidMove(int srcRow, int srcCol, int destRow, int destCol, Piece[][] board) {
         //TODO check logic
@@ -14,10 +20,6 @@ public class King extends Piece{
         int colDiff = Math.abs(srcCol-destCol);
         int startRow = isWhite ? 0 : 7;
 
-
-        if(underCheck(destRow, destCol, board)){
-            return false;
-        }
 
 
 
@@ -49,24 +51,7 @@ public class King extends Piece{
         return false;
     }
 
-    boolean underCheck(int destRow, int destCol, Piece[][] board){
-        for(int row = 0; row < 8; row++){
-            for(int col = 0; col < 8; col++){
-                Piece piece = board[row][col];
-                if (piece instanceof King) continue;
-                if(piece != null && piece.isWhite != this.isWhite){
-                    if(piece.isValidMove(row, col, destRow, destCol, board)){
-                        System.out.println("King is under check from: " + board[row][col] + " from position: " + row + col);
-                        return true;
-                    }
-                }
-            }
-        }
 
-
-
-        return false;
-    }
 
     boolean canShortCastle(Piece[][] board){
         if(this.hasMoved){

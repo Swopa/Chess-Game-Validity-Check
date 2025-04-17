@@ -4,6 +4,13 @@ public class Pawn extends Piece{
         super(isWhite);
     }
 
+
+    public Pawn clone() {
+        Pawn copy = new Pawn(this.isWhite);
+        copy.hasMoved = this.hasMoved;
+        return copy;
+    }
+
     @Override
     boolean isValidMove(int srcRow, int srcCol, int destRow, int destCol, Piece[][] board) {
 
