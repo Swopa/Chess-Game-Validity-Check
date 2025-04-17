@@ -58,15 +58,24 @@ public class King extends Piece{
             return false;
         }
 
-        if(this.isWhite){
-            Piece rook = board[0][7];
-            if(rook == null || !(rook instanceof Rook) || rook.hasMoved()) return false;
-            return board[0][5] == null && board[0][6] == null;
-        }else {
-            Piece rook = board[7][7];
-            if(rook == null || !(rook instanceof Rook) || rook.hasMoved()) return false;
-            return board[7][5] == null && board[7][6] == null;
-        }
+        Board tempBoard = new Board();
+        tempBoard.board = board;
+        int row = isWhite ? 0 : 7;
+
+
+        Piece rook = board[row][7];
+        if (rook == null || !(rook instanceof Rook) || rook.hasMoved()) return false;
+        if (board[row][5] != null || board[row][6] != null) return false;
+
+        // Check squares are not attacked
+        if (tempBoard.isSquareAttacked(row, 4, !isWhite)) return false; // King's original square
+        if (tempBoard.isSquareAttacked(row, 5, !isWhite)) return false; // Square king passes through
+        if (tempBoard.isSquareAttacked(row, 6, !isWhite)) return false; // Destination
+
+        return true;
+
+
+
     }
 
     boolean canLongCastle(Piece[][] board){
@@ -74,14 +83,20 @@ public class King extends Piece{
             return false;
         }
 
-        if(this.isWhite){
-            Piece rook = board[0][0];
-            if(rook == null || !(rook instanceof Rook) || rook.hasMoved()) return false;
-            return board[0][1] == null && board[0][2] == null && board[0][3] == null;
-        }else {
-            Piece rook = board[7][0];
-            if(rook == null || !(rook instanceof Rook) || rook.hasMoved()) return false;
-            return board[7][1] == null && board[7][2] == null && board[7][3] == null;
-        }
+        int row = isWhite ? 0 : 7;
+        Board tempBoard = new Board();
+        tempBoard.board = board;
+
+        // Check rook and empty spaces
+        Piece rook = board[row][0];
+        if (rook == null || !(rook instanceof Rook) || rook.hasMoved()) return false;
+        if (board[row][1] != null || board[row][2] != null || board[row][3] != null) return false;
+
+        // Check squares are not attacked
+        if (tempBoard.isSquareAttacked(row, 4, !isWhite)) return false; // King's original square
+        if (tempBoard.isSquareAttacked(row, 3, !isWhite)) return false; // Square king passes through
+        if (tempBoard.isSquareAttacked(row, 2, !isWhite)) return false; // Destination
+
+        return true;
     }
 }

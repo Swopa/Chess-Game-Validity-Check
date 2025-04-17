@@ -7,14 +7,23 @@ import java.util.List;
 public class PGNFileReader {
     public static List<String> readGames(String filePath) throws IOException{
         String content = Files.readString(Path.of(filePath));
-        String[] games = content.split("(?=\\[Event)");
+
+
+        content = content.replaceAll("\r\n", "\n");
+
+
+        String[] games = content.split("(?=\\[Event )");
+
         List<String> cleanGames = new ArrayList<>();
-        for(String game : games){
-            if(!game.trim().isEmpty()){
-                cleanGames.add(game.trim());
+        for (String game : games) {
+            game = game.trim();
+            if (!game.isEmpty()) {
+                cleanGames.add(game);
             }
         }
+
         return cleanGames;
     }
 
 }
+

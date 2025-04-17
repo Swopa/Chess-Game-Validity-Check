@@ -113,7 +113,7 @@ public class MoveInterpreter {
 
 
         //Move piece
-        board.movePiece(source[0], source[1], destRow, destCol);
+
 
         //Handle promotion if present
         if(promotionChar != 0){
@@ -134,13 +134,14 @@ public class MoveInterpreter {
         }
 
 
+
+
         //Save if piece has moved to track eligibility for castling
         Piece piece = board.board[source[0]] [source[1]];
-
-
         if(piece instanceof King || piece instanceof Rook){
             piece.markMove();
         }
+        board.movePiece(source[0], source[1], destRow, destCol);
 
         whiteToMove = !whiteToMove;
     }

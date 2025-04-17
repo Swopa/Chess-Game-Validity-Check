@@ -68,11 +68,18 @@ public class Board {
             throw new IllegalStateException("King not found on the board.");
         }
 
-        for(int row = 0; row < 8; row++){
-            for(int col = 0; col <8; col++){
-                Piece attacker = board[row][col];
-                if(attacker != null && attacker.isWhite != isWhite){
-                    if(attacker.isValidMove(row, col, kingRow, kingCol, this.board)){
+
+        return isSquareAttacked(kingRow, kingCol, isWhite);
+    }
+
+
+
+    public boolean isSquareAttacked(int row, int col, boolean byWhite){
+        for (int r = 0; r < 8; r++) {
+            for (int c = 0; c < 8; c++) {
+                Piece attacker = board[r][c];
+                if (attacker != null && attacker.isWhite == byWhite) {
+                    if (attacker.isValidMove(r, c, row, col, board)) {
                         return true;
                     }
                 }
@@ -80,7 +87,6 @@ public class Board {
         }
         return false;
     }
-
 
 
     public Board copy() {
