@@ -76,7 +76,8 @@ public class Main {
 public class Main {
     public static void main(String[] args) {
         try {
-            List<String> games = PGNFileReader.readGames("src\\Tbilisi2015.pgn");
+            String filePath = "src\\Tbilisi2015.pgn";
+            List<String> games = PGNFileReader.readGames(filePath);
 
             int gameCount = 1;
             for (String game : games) {
