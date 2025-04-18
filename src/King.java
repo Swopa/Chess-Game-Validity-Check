@@ -14,7 +14,6 @@ public class King extends Piece{
 
     @Override
     boolean isValidMove(int srcRow, int srcCol, int destRow, int destCol, Piece[][] board) {
-        //TODO check logic
         //King moves one space in any direction
         int rowDiff = Math.abs(srcRow-destRow);
         int colDiff = Math.abs(srcCol-destCol);
@@ -23,7 +22,7 @@ public class King extends Piece{
 
 
 
-        // Short castle only happens from e1 to g1 (white) or e8 to g8 (black)
+
         if (this.isWhite && srcRow == 0 && srcCol == 4 && destRow == 0 && destCol == 6) {
             return canShortCastle(board);
         }
@@ -31,7 +30,7 @@ public class King extends Piece{
             return canShortCastle(board);
         }
 
-// Long castle only happens from e1 to c1 (white) or e8 to c8 (black)
+
         if (this.isWhite && srcRow == 0 && srcCol == 4 && destRow == 0 && destCol == 2) {
             return canLongCastle(board);
         }
